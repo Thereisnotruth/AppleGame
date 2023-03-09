@@ -4,6 +4,8 @@ import GamePage from '../pages/GamePage';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
+  const appleRef = useRef<HTMLDivElement>(null);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
@@ -15,6 +17,7 @@ const GameContainer = () => {
   const [boundRight, setBoundRight] = useState<number>(0);
   const [boundTop, setBoundTop] = useState<number>(0);
   const [boundBottom, setBoundBottom] = useState<number>(0);
+
   const handleMouseDown = (event: React.MouseEvent) => {
     if (
       event.clientX < boundRight &&
@@ -30,6 +33,7 @@ const GameContainer = () => {
     }
   };
   const handleMouseUp = (event: React.MouseEvent) => {
+    setIsSelected(false);
     setIsDragged(false);
     setWidth(0);
     setHeight(0);
@@ -42,16 +46,33 @@ const GameContainer = () => {
       event.clientY < boundBottom &&
       event.clientY > boundTop
     ) {
-      if (isDragged) {
-        if (event.clientX - endX > 0) {
-          setWidth(event.clientX - startX);
-        } else {
+      if (isDragged && appleRef.current) {
+        if (event.clientX - endX > 0 && event.clientY - endY > 0) {
+          // 우-하
+          setWidth(event.clientX - endX);
+          setHeight(event.clientY - endY);
+        } else if (event.clientX - endX > 0 && event.clientY - endY < 0) {
+          // 우-상
+          setWidth(event.clientX - endX);
+          setStartY(event.clientY);
+          setHeight(endY - event.clientY);
+          if (
+            appleRef.current.offsetTop + appleRef.current.clientHeight > event.clientY &&
+            appleRef.current.offsetLeft < event.clientX
+          ) {
+            setIsSelected(true);
+          } else {
+            setIsSelected(false);
+          }
+        } else if (event.clientX - endX < 0 && event.clientY - endY > 0) {
+          // 좌-하
           setStartX(event.clientX);
           setWidth(endX - event.clientX);
-        }
-        if (event.clientY - endY > 0) {
-          setHeight(event.clientY - startY);
-        } else {
+          setHeight(event.clientY - endY);
+        } else if (event.clientX - endX < 0 && event.clientY - endY < 0) {
+          // 좌-상
+          setStartX(event.clientX);
+          setWidth(endX - event.clientX);
           setStartY(event.clientY);
           setHeight(endY - event.clientY);
         }
@@ -69,6 +90,8 @@ const GameContainer = () => {
   return (
     <GamePage
       boundaryRef={boundaryRef}
+      appleRef={appleRef}
+      isSelected={isSelected}
       isDragged={isDragged}
       handleMouseDown={handleMouseDown}
       handleMouseUp={handleMouseUp}
