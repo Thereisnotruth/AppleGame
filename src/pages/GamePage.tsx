@@ -8,6 +8,9 @@ const GamePage = (props: any) => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
     startX,
     startY,
     width,
@@ -22,11 +25,14 @@ const GamePage = (props: any) => {
 
   return (
     <div
-      className="bg-green h-full select-none"
+      className="bg-green h-full select-none min-w-fit min-h-full"
       onMouseUp={handleMouseUp}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto">
         <div className="w-4/6 h-1/6 bg-light_green rounded-xl mx-w-6xl">
@@ -38,7 +44,9 @@ const GamePage = (props: any) => {
             }}
           />
         </div>
-        <div className="w-1/6 bg-light_green py-4 text-3xl rounded-xl">{score}</div>
+        <div className="w-1/6 bg-light_green py-4 sm:py-1 text-3xl sm:text-xl rounded-xl">
+          {score}
+        </div>
       </div>
       <div
         className="h-4/6 w-5/6 bg-light_green rounded-xl max-w-6xl flex justify-center items-center flex-wrap mx-auto"
@@ -49,7 +57,7 @@ const GamePage = (props: any) => {
       <div className="h-1/6 flex items-center w-5/6 mx-auto max-w-6xl">
         <button
           type="button"
-          className="bg-light_green py-4 px-9 text-2xl rounded-xl"
+          className="bg-light_green py-4 sm:py-1 px-9 text-2xl sm:text-lg rounded-xl"
           onClick={moveMain}
         >
           메인으로
