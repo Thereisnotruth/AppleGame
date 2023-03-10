@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import GamePage from '../pages/GamePage';
 
@@ -19,6 +20,8 @@ const GameContainer = () => {
   const [score, setScore] = useState<number>(0);
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
+
+  const navigate = useNavigate();
 
   const drag = (num: number, target: HTMLDivElement) => {
     setSelected((prev: number) => prev + num);
@@ -92,6 +95,10 @@ const GameContainer = () => {
       }
     }
   };
+
+  const reset = () => {
+    navigate('/');
+  };
   useEffect(() => {
     if (boundaryRef.current) {
       setBoundLeft(boundaryRef.current.offsetLeft);
@@ -116,6 +123,7 @@ const GameContainer = () => {
       direction={direction}
       score={score}
       drag={drag}
+      reset={reset}
     />
   );
 };
