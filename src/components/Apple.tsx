@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FaAppleAlt } from 'react-icons/fa';
 
 const Apple = (props: any) => {

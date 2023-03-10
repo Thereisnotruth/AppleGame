@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import GamePage from '../pages/GamePage';
+import AppleContainer from './AppleContainer';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,8 @@ const GameContainer = () => {
   const [score, setScore] = useState<number>(0);
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
+  const [time, setTime] = useState<number>(120);
+  const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
 
   const navigate = useNavigate();
 
@@ -96,9 +99,50 @@ const GameContainer = () => {
     }
   };
 
+  const createRow = () => {
+    const row: Array<React.ReactNode> = [];
+    for (let i = 0; i < 17; i++) {
+      row.push(
+        <div
+          style={{
+            width: '60px',
+            height: '60px',
+            display: 'inline-block',
+          }}
+        >
+          <AppleContainer
+            test={Math.floor(Math.random() * 9 + 1)}
+            isDragged={isDragged}
+            endX={endX}
+            endY={endY}
+            width={width}
+            height={height}
+            direction={direction}
+            drag={drag}
+          />
+        </div>
+      );
+    }
+    return row;
+  };
+
+  const createApple = () => {
+    const board: Array<React.ReactNode> = [];
+    for (let i = 0; i < 10; i++) {
+      board.push(<div className="h-[60px]">{createRow()}</div>);
+    }
+    return <div>{board}</div>;
+  };
+
   const reset = () => {
     navigate('/');
   };
+  useEffect(() => {
+    if (time <= 0) {
+      alert('종료');
+      clearInterval(intervalTime.current as NodeJS.Timeout);
+    }
+  }, [time]);
   useEffect(() => {
     if (boundaryRef.current) {
       setBoundLeft(boundaryRef.current.offsetLeft);
@@ -106,6 +150,11 @@ const GameContainer = () => {
       setBoundTop(boundaryRef.current.offsetTop);
       setBoundBottom(boundaryRef.current.offsetTop + boundaryRef.current.clientHeight);
     }
+    intervalTime.current = setInterval(() => {
+      setTime((prev: number) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalTime.current as NodeJS.Timeout);
   }, []);
   return (
     <GamePage
@@ -124,6 +173,8 @@ const GameContainer = () => {
       score={score}
       drag={drag}
       reset={reset}
+      time={time}
+      createApple={createApple}
     />
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import AppleContainer from '../containers/AppleContainer';
 
 const GamePage = (props: any) => {
   const {
@@ -19,6 +18,8 @@ const GamePage = (props: any) => {
     score,
     drag,
     reset,
+    time,
+    createApple,
   } = props;
 
   return (
@@ -29,36 +30,23 @@ const GamePage = (props: any) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
     >
-      <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around">
-        <div className="w-4/6">타이머</div>
+      <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto">
+        <div className="w-4/6 h-1/6 bg-light_green rounded-xl">
+          <div
+            className="h-full bg-red rounded-xl"
+            style={{
+              width: `${((time - 1) / 119) * 100}%`,
+              transition: 'width 1s linear',
+            }}
+          />
+        </div>
         <div className="w-1/6 bg-light_green py-4 text-3xl rounded-xl">{score}</div>
       </div>
       <div
         className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl flex justify-center items-center"
         ref={boundaryRef}
       >
-        <AppleContainer
-          test={3}
-          isDragged={isDragged}
-          isSelected={isSelected}
-          endX={endX}
-          endY={endY}
-          width={width}
-          height={height}
-          direction={direction}
-          drag={drag}
-        />
-        <AppleContainer
-          test={7}
-          isDragged={isDragged}
-          isSelected={isSelected}
-          endX={endX}
-          endY={endY}
-          width={width}
-          height={height}
-          direction={direction}
-          drag={drag}
-        />
+        {createApple()}
       </div>
       <div className="h-1/6 flex items-center w-5/6 mx-auto">
         <button
