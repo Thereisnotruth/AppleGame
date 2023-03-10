@@ -43,7 +43,7 @@ const GamePage = (props: any) => {
         <div className="w-1/6 bg-light_green py-4 text-3xl rounded-xl">{score}</div>
       </div>
       <div
-        className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl flex justify-center items-center"
+        className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl flex justify-center items-center flex-wrap"
         ref={boundaryRef}
       >
         {createApple()}

@@ -105,9 +105,8 @@ const GameContainer = () => {
       row.push(
         <div
           style={{
-            width: '60px',
-            height: '60px',
-            display: 'inline-block',
+            width: `${(1 / 17) * 100}%`,
+            height: '100%',
           }}
         >
           <AppleContainer
@@ -129,9 +128,9 @@ const GameContainer = () => {
   const createApple = () => {
     const board: Array<React.ReactNode> = [];
     for (let i = 0; i < 10; i++) {
-      board.push(<div className="h-[60px]">{createRow()}</div>);
+      board.push(<div className="h-[10%] flex w-full">{createRow()}</div>);
     }
-    return <div>{board}</div>;
+    return board;
   };
 
   const reset = () => {
