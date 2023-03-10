@@ -8,6 +8,9 @@ const GamePage = (props: any) => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
     startX,
     startY,
     width,
@@ -27,6 +30,9 @@ const GamePage = (props: any) => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto">
         <div className="w-4/6 h-1/6 bg-light_green rounded-xl mx-w-6xl">
