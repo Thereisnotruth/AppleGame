@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import GamePage from '../pages/GamePage';
 import AppleContainer from './AppleContainer';
+import RankViewModel from '../viewmodels/RankViewModel';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
+  const [nickname, setNickname] = useState<string>('');
   const [direction, setDirection] = useState<number>(0);
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
@@ -26,6 +28,18 @@ const GameContainer = () => {
   const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
 
   const navigate = useNavigate();
+
+  const handleRegistRank = async () => {
+    const result = await RankViewModel.setRank(nickname, score);
+    if (result.id !== null) {
+      alert('등록되었습니다.');
+      navigate('/');
+    }
+  };
+
+  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
 
   const drag = (num: number, target: HTMLDivElement) => {
     setSelected((prev: number) => prev + num);
@@ -259,6 +273,9 @@ const GameContainer = () => {
       createApple={createApple}
       isGameOver={isGameOver}
       tryAgain={tryAgain}
+      nickname={nickname}
+      handleNicknameChange={handleNicknameChange}
+      handleRegistRank={handleRegistRank}
     />
   );
 };
