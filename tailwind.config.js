@@ -8,6 +8,7 @@ module.exports = {
       green: '#5D9C59',
       light_green: '#DDF7E3',
       white: '#FFFFFF',
+      trans_gray: 'rgba(180, 180, 180, 0.5)',
     },
   },
   plugins: [],

@@ -22,6 +22,7 @@ const GameContainer = () => {
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
   const [time, setTime] = useState<number>(120);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
 
   const navigate = useNavigate();
@@ -38,7 +39,8 @@ const GameContainer = () => {
       event.clientX < boundRight &&
       event.clientX > boundLeft &&
       event.clientY < boundBottom &&
-      event.clientY > boundTop
+      event.clientY > boundTop &&
+      time > 0
     ) {
       setIsDragged(true);
       setEndX(event.clientX);
@@ -133,12 +135,24 @@ const GameContainer = () => {
     return board;
   };
 
-  const reset = () => {
+  const moveMain = () => {
     navigate('/');
   };
+
+  const tryAgain = () => {
+    window.location.reload();
+  };
+
   useEffect(() => {
     if (time <= 0) {
-      alert('종료');
+      setIsGameOver(true);
+      setIsDragged(false);
+      setSelectedArray([]);
+      setSelected(0);
+      setDirection(0);
+      setIsDragged(false);
+      setWidth(0);
+      setHeight(0);
       clearInterval(intervalTime.current as NodeJS.Timeout);
     }
   }, [time]);
@@ -171,9 +185,11 @@ const GameContainer = () => {
       direction={direction}
       score={score}
       drag={drag}
-      reset={reset}
+      moveMain={moveMain}
       time={time}
       createApple={createApple}
+      isGameOver={isGameOver}
+      tryAgain={tryAgain}
     />
   );
 };
