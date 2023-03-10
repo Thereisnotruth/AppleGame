@@ -18,6 +18,7 @@ const GamePage = (props: any) => {
     direction,
     score,
     drag,
+    reset,
   } = props;
 
   return (
@@ -28,7 +29,10 @@ const GamePage = (props: any) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
     >
-      <div className="h-1/6">헤더{score}</div>
+      <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around">
+        <div className="w-4/6">타이머</div>
+        <div className="w-1/6 bg-light_green py-4 text-3xl rounded-xl">{score}</div>
+      </div>
       <div
         className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl flex justify-center items-center"
         ref={boundaryRef}
@@ -56,7 +60,15 @@ const GamePage = (props: any) => {
           drag={drag}
         />
       </div>
-      <div className="h-1/6"></div>
+      <div className="h-1/6 flex items-center w-5/6 mx-auto">
+        <button
+          type="button"
+          className="bg-light_green py-4 px-9 text-2xl rounded-xl"
+          onClick={reset}
+        >
+          초기화
+        </button>
+      </div>
       <div
         style={
           isDragged
