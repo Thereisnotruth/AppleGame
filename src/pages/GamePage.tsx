@@ -1,10 +1,9 @@
 import React from 'react';
-import Apple from '../components/Apple';
+import AppleContainer from '../containers/AppleContainer';
 
 const GamePage = (props: any) => {
   const {
     boundaryRef,
-    appleRef,
     isSelected,
     isDragged,
     handleMouseDown,
@@ -12,8 +11,13 @@ const GamePage = (props: any) => {
     handleMouseMove,
     startX,
     startY,
+    endX,
+    endY,
     width,
     height,
+    direction,
+    score,
+    drag,
   } = props;
 
   return (
@@ -24,9 +28,33 @@ const GamePage = (props: any) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
     >
-      <div className="h-1/6">헤더</div>
-      <div className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl" ref={boundaryRef}>
-        <Apple number={1} appleRef={appleRef} isSelected={isSelected} />
+      <div className="h-1/6">헤더{score}</div>
+      <div
+        className="h-4/6 w-5/6 bg-light_green mx-auto rounded-xl max-w-6xl flex justify-center items-center"
+        ref={boundaryRef}
+      >
+        <AppleContainer
+          test={3}
+          isDragged={isDragged}
+          isSelected={isSelected}
+          endX={endX}
+          endY={endY}
+          width={width}
+          height={height}
+          direction={direction}
+          drag={drag}
+        />
+        <AppleContainer
+          test={7}
+          isDragged={isDragged}
+          isSelected={isSelected}
+          endX={endX}
+          endY={endY}
+          width={width}
+          height={height}
+          direction={direction}
+          drag={drag}
+        />
       </div>
       <div className="h-1/6"></div>
       <div
