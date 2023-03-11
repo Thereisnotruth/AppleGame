@@ -8,6 +8,9 @@ const GamePage = (props: any) => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
     startX,
     startY,
     width,
@@ -18,15 +21,21 @@ const GamePage = (props: any) => {
     createApple,
     isGameOver,
     tryAgain,
+    nickname,
+    handleNicknameChange,
+    handleRegistRank,
   } = props;
 
   return (
     <div
-      className="bg-green h-full select-none"
+      className="bg-green h-full select-none min-w-fit min-h-full"
       onMouseUp={handleMouseUp}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto">
         <div className="w-4/6 h-1/6 bg-light_green rounded-xl mx-w-6xl">
@@ -38,7 +47,9 @@ const GamePage = (props: any) => {
             }}
           />
         </div>
-        <div className="w-1/6 bg-light_green py-4 text-3xl rounded-xl">{score}</div>
+        <div className="w-1/6 bg-light_green xl:py-4 lg:py-3 py-1 xl:text-3xl lg:text-2xl text-xl rounded-xl">
+          {score}
+        </div>
       </div>
       <div
         className="h-4/6 w-5/6 bg-light_green rounded-xl max-w-6xl flex justify-center items-center flex-wrap mx-auto"
@@ -49,7 +60,7 @@ const GamePage = (props: any) => {
       <div className="h-1/6 flex items-center w-5/6 mx-auto max-w-6xl">
         <button
           type="button"
-          className="bg-light_green py-4 px-9 text-2xl rounded-xl"
+          className="bg-light_green xl:py-4 lg:py-3 py-1 px-9 xl:text-2xl lg:text-2xl text-lg rounded-xl"
           onClick={moveMain}
         >
           메인으로
@@ -76,30 +87,32 @@ const GamePage = (props: any) => {
         className="absolute top-0 z-10 w-full h-full bg-trans_gray flex justify-center items-center"
         style={isGameOver ? {} : { display: 'none' }}
       >
-        <div className="bg-green w-2/6 rounded-xl p-[10px]">
+        <div className="bg-green w-3/6 rounded-xl p-[10px]">
           <div className="flex-wrap flex-col bg-light_green rounded-xl w-full py-6 flex justify-center items-center">
-            <div className="w-1/2 justify-center flex items-center font-bold text-3xl">
-              <FaAppleAlt className="text-red text-6xl" />
+            <div className="w-1/2 justify-center flex items-center font-bold xl:text-3xl lg:text-2xl text-lg">
+              <FaAppleAlt className="text-red xl:text-6xl lg:text-4xl text-2xl mx-1" />
               게임 오버...
             </div>
-            <div className="w-1/2 flex text-2xl justify-center">{score}점</div>
+            <div className="w-1/2 flex xl:text-2xl justify-center">{score}점</div>
             <input
               type="text"
-              className="w-1/2 text-center text-2xl bg-light_green outline-none border-none my-4"
+              className="w-1/2 text-center xl:text-2xl text-md bg-light_green outline-none border-none my-4"
               style={{ borderBottom: '0.5px solid black' }}
               placeholder="닉네임 입력..."
+              value={nickname}
+              onChange={handleNicknameChange}
             />
             <div className="w-1/4 flex flex-col">
               <button
                 type="button"
-                className="bg-green w-full text-xl rounded-xl py-2 text-white my-1"
-                onClick={moveMain}
+                className="bg-green w-full xl:text-xl rounded-xl py-2 text-white my-1"
+                onClick={handleRegistRank}
               >
-                랭킹등록(미구현)
+                랭킹등록
               </button>
               <button
                 type="button"
-                className="bg-green w-full text-xl rounded-xl py-2 text-white my-1"
+                className="bg-green w-full xl:text-xl rounded-xl py-2 text-white my-1"
                 onClick={tryAgain}
               >
                 다시하기

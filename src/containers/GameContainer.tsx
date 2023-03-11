@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import GamePage from '../pages/GamePage';
 import AppleContainer from './AppleContainer';
+import RankViewModel from '../viewmodels/RankViewModel';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
+  const [nickname, setNickname] = useState<string>('');
   const [direction, setDirection] = useState<number>(0);
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
@@ -27,11 +29,89 @@ const GameContainer = () => {
 
   const navigate = useNavigate();
 
+  const handleRegistRank = async () => {
+    const result = await RankViewModel.setRank(nickname, score);
+    if (result.id !== null) {
+      alert('등록되었습니다.');
+      navigate('/');
+    }
+  };
+
+  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
+
   const drag = (num: number, target: HTMLDivElement) => {
     setSelected((prev: number) => prev + num);
     const newArray = selectedArray;
     newArray.push(target);
     setSelectedArray([...newArray]);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    if (
+      event.touches[0].clientX < boundRight &&
+      event.touches[0].clientX > boundLeft &&
+      event.touches[0].clientY < boundBottom &&
+      event.touches[0].clientY > boundTop &&
+      time > 0
+    ) {
+      setIsDragged(true);
+      setEndX(event.touches[0].clientX);
+      setEndY(event.touches[0].clientY);
+      setStartX(event.touches[0].clientX);
+      setStartY(event.touches[0].clientY);
+    }
+  };
+  const handleTouchMove = (event: React.TouchEvent) => {
+    if (
+      event.touches[0].clientX < boundRight &&
+      event.touches[0].clientX > boundLeft &&
+      event.touches[0].clientY < boundBottom &&
+      event.touches[0].clientY > boundTop
+    ) {
+      if (isDragged) {
+        if (event.touches[0].clientX - endX > 0 && event.touches[0].clientY - endY > 0) {
+          // 우-하
+          setWidth(event.touches[0].clientX - endX);
+          setHeight(event.touches[0].clientY - endY);
+          setDirection(4);
+        } else if (event.touches[0].clientX - endX > 0 && event.touches[0].clientY - endY < 0) {
+          // 우-상
+          setWidth(event.touches[0].clientX - endX);
+          setStartY(event.touches[0].clientY);
+          setHeight(endY - event.touches[0].clientY);
+          setDirection(1);
+        } else if (event.touches[0].clientX - endX < 0 && event.touches[0].clientY - endY > 0) {
+          // 좌-하
+          setStartX(event.touches[0].clientX);
+          setWidth(endX - event.touches[0].clientX);
+          setHeight(event.touches[0].clientY - endY);
+          setDirection(3);
+        } else if (event.touches[0].clientX - endX < 0 && event.touches[0].clientY - endY < 0) {
+          // 좌-상
+          setStartX(event.touches[0].clientX);
+          setWidth(endX - event.touches[0].clientX);
+          setStartY(event.touches[0].clientY);
+          setHeight(endY - event.touches[0].clientY);
+          setDirection(2);
+        }
+      }
+    }
+  };
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    if (selected === 10) {
+      selectedArray.forEach((div: HTMLDivElement) => {
+        div.style.display = 'none';
+      });
+      setScore((prev: number) => prev + selectedArray.length);
+    }
+    setSelectedArray([]);
+    setSelected(0);
+    setDirection(0);
+    setIsDragged(false);
+    setWidth(0);
+    setHeight(0);
   };
 
   const handleMouseDown = (event: React.MouseEvent) => {
@@ -49,7 +129,7 @@ const GameContainer = () => {
       setStartY(event.clientY);
     }
   };
-  const handleMouseUp = (event: React.MouseEvent) => {
+  const handleMouseUp = (event: React.MouseEvent | React.TouchEvent) => {
     if (selected === 10) {
       selectedArray.forEach((div: HTMLDivElement) => {
         div.style.display = 'none';
@@ -176,6 +256,9 @@ const GameContainer = () => {
       handleMouseDown={handleMouseDown}
       handleMouseUp={handleMouseUp}
       handleMouseMove={handleMouseMove}
+      handleTouchStart={handleTouchStart}
+      handleTouchMove={handleTouchMove}
+      handleTouchEnd={handleTouchEnd}
       startX={startX}
       startY={startY}
       endX={endX}
@@ -190,6 +273,9 @@ const GameContainer = () => {
       createApple={createApple}
       isGameOver={isGameOver}
       tryAgain={tryAgain}
+      nickname={nickname}
+      handleNicknameChange={handleNicknameChange}
+      handleRegistRank={handleRegistRank}
     />
   );
 };
