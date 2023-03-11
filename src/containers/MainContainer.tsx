@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MainPage from '../pages/MainPage';
-import RankViewModel from '../viewmodels/RankViewModel';
+import useViewModel from '../viewmodels/RankViewModel';
 
 const MainContainer = () => {
   const navigate = useNavigate();
   const [ranking, setRanking] = useState<Array<any>>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const { getRank, setRank } = useViewModel();
+
   const startGame = () => {
     navigate('/game');
   };
 
   const handleModalOpen = async () => {
-    const getRankResponse = await RankViewModel.getRank();
+    const getRankResponse = await getRank();
     setRanking(getRankResponse);
     setIsModalOpen(true);
   };

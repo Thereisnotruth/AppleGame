@@ -6,27 +6,33 @@ import {
   query,
   orderBy,
   addDoc,
+  updateDoc,
+  doc,
+  getDoc,
 } from 'firebase/firestore/lite';
 import { db } from '../utils/firebase';
 
-const RankViewModel = {
-  getRank: async () => {
-    const ret: Array<any> = [];
-    const rankingRef = collection(db, 'ranking');
-    const q = query(rankingRef, orderBy('score', 'desc'), limit(100));
-    const rankingSnapshot = await getDocs(q);
-    rankingSnapshot.forEach((doc: DocumentData) => {
-      ret.push(doc.data());
-    });
+const RankViewModel = () => {
+  const getRank = async () => {
+    const rankingRef = doc(db, 'ranking', 'ranking');
+    const rankingSnapshot = await getDoc(rankingRef);
+    const ret: Array<any> = rankingSnapshot.data()?.ranking;
+    ret.sort((a: any, b: any) => b.score - a.score);
     return ret;
-  },
-  setRank: async (nickname: string, score: number) => {
-    const rankingRef = await addDoc(collection(db, 'ranking'), {
-      nickname: nickname,
-      score: score,
+  };
+  const setRank = async (nickname: string, score: number) => {
+    const rank: Array<any> = await getRank();
+    rank.push({ nickname, score });
+    rank.sort((a: any, b: any) => b.score - a.score);
+    const rankingRef = doc(db, 'ranking', 'ranking');
+    await updateDoc(rankingRef, {
+      ranking: rank.slice(0, 100),
     });
-    return rankingRef;
-  },
+  };
+  return {
+    getRank,
+    setRank,
+  };
 };
 
 export default RankViewModel;
