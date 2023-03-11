@@ -241,18 +241,26 @@ const GameContainer = () => {
       clearInterval(intervalTime.current as NodeJS.Timeout);
     }
   }, [time]);
-  useEffect(() => {
+
+  const setBoundary = () => {
     if (boundaryRef.current) {
       setBoundLeft(boundaryRef.current.offsetLeft);
       setBoundRight(boundaryRef.current.offsetLeft + boundaryRef.current.clientWidth);
       setBoundTop(boundaryRef.current.offsetTop);
       setBoundBottom(boundaryRef.current.offsetTop + boundaryRef.current.clientHeight);
     }
+  };
+  useEffect(() => {
+    setBoundary();
+    window.addEventListener('resize', setBoundary);
     intervalTime.current = setInterval(() => {
       setTime((prev: number) => prev - 1);
     }, 1000);
 
-    return () => clearInterval(intervalTime.current as NodeJS.Timeout);
+    return () => {
+      window.removeEventListener('resize', setBoundary);
+      clearInterval(intervalTime.current as NodeJS.Timeout);
+    };
   }, []);
   return (
     <GamePage
