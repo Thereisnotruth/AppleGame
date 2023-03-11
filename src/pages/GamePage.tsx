@@ -98,9 +98,10 @@ const GamePage = (props: any) => {
               type="text"
               className="w-1/2 text-center xl:text-2xl text-md bg-light_green outline-none border-none my-4"
               style={{ borderBottom: '0.5px solid black' }}
-              placeholder="닉네임 입력..."
+              placeholder="닉네임(12글자 이내) 입력..."
               value={nickname}
               onChange={handleNicknameChange}
+              maxLength={12}
             />
             <div className="w-1/4 flex flex-col">
               <button
