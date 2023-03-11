@@ -31,9 +31,14 @@ const GameContainer = () => {
   const { setRank } = useViewModel();
 
   const handleRegistRank = async () => {
-    await setRank(nickname, score);
-    alert('등록되었습니다.');
-    navigate('/');
+    const newNickname = nickname.replace(' ', '');
+    if (newNickname.length === 0) {
+      alert('닉네임을 입력해주세요.');
+    } else {
+      await setRank(nickname, score);
+      alert('등록되었습니다.');
+      navigate('/');
+    }
   };
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
