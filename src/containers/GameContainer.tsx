@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import GamePage from '../pages/GamePage';
 import AppleContainer from './AppleContainer';
-import RankViewModel from '../viewmodels/RankViewModel';
+import useViewModel from '../viewmodels/RankViewModel';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
@@ -23,18 +23,17 @@ const GameContainer = () => {
   const [score, setScore] = useState<number>(0);
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
-  const [time, setTime] = useState<number>(120);
+  const [time, setTime] = useState<number>(2);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
 
   const navigate = useNavigate();
+  const { setRank } = useViewModel();
 
   const handleRegistRank = async () => {
-    const result = await RankViewModel.setRank(nickname, score);
-    if (result.id !== null) {
-      alert('등록되었습니다.');
-      navigate('/');
-    }
+    await setRank(nickname, score);
+    alert('등록되었습니다.');
+    navigate('/');
   };
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
