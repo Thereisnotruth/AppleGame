@@ -11,5 +11,5 @@ module.exports = {
       trans_gray: 'rgba(180, 180, 180, 0.5)',
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
