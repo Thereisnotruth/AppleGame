@@ -108,7 +108,7 @@ const GamePage = (props: any) => {
                 className="bg-green w-full xl:text-xl rounded-xl py-2 text-white my-1"
                 onClick={handleRegistRank}
               >
-                랭킹등록(미구현)
+                랭킹등록
               </button>
               <button
                 type="button"

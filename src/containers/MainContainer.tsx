@@ -2,54 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MainPage from '../pages/MainPage';
+import RankViewModel from '../viewmodels/RankViewModel';
 
 const MainContainer = () => {
   const navigate = useNavigate();
-  const [ranking, setRanking] = useState<Array<any>>([
-    {
-      nickname: '닉네임sdfsdfsdfsdfd',
-      score: 122,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-    {
-      nickname: '닉네임',
-      score: 12,
-    },
-  ]);
+  const [ranking, setRanking] = useState<Array<any>>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const startGame = () => {
     navigate('/game');
   };
 
-  const handleModalOpen = () => {
+  const handleModalOpen = async () => {
+    const getRankResponse = await RankViewModel.getRank();
+    setRanking(getRankResponse);
     setIsModalOpen(true);
   };
 

@@ -13,7 +13,7 @@ const RankViewModel = {
   getRank: async () => {
     const ret: Array<any> = [];
     const rankingRef = collection(db, 'ranking');
-    const q = query(rankingRef, orderBy('score'), limit(100));
+    const q = query(rankingRef, orderBy('score', 'desc'), limit(100));
     const rankingSnapshot = await getDocs(q);
     rankingSnapshot.forEach((doc: DocumentData) => {
       ret.push(doc.data());

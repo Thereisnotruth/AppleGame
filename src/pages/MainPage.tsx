@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaAppleAlt } from 'react-icons/fa';
-import { AiOutlineClose } from 'react-icons/ai';
 
 const MainPage = (props: any) => {
   const { startGame, ranking, isModalOpen, handleModalOpen, handleModalClose } = props;
@@ -27,29 +26,24 @@ const MainPage = (props: any) => {
         </div>
       </div>
       {isModalOpen ? (
-        <div className="absolute bg-green top-1/2 translate-y-[-50%] p-2 rounded-md border-solid border-2 border-[#000000] min-w-[40%] lg:rounded-xl lg:p-4">
-          <div className="bg-light_green rounded-md lg:rounded-xl p-2 lg:p-4">
-            <div className="flex justify-center text-lg lg:text-3xl mx-auto relative">
-              <div className="mx-auto">Top 100</div>
-              <button
-                type="button"
-                className="absolute right-0 top-1/2 translate-y-[-50%] bg-green rounded-[50%] p-1"
-                onClick={handleModalClose}
-              >
-                <AiOutlineClose className="text-[12px] lg:text-xl xl:text-2xl text-white" />
-              </button>
-            </div>
-            <div className="p-1 max-h-36 lg:max-h-72 overflow-auto scrollbar-hide">
-              {ranking.map((rank: any, i: number) => (
-                <div
-                  key={i}
-                  className="flex justify-center bg-green text-white text-[10px] rounded-md p-2 my-1 lg:rounded-xl lg:text-lg snap-none"
-                >
-                  <div className="w-2/12">{i + 1}</div>
-                  <div className="w-8/12">{rank.nickname}</div>
-                  <div className="w-2/12">{rank.score}점</div>
-                </div>
-              ))}
+        <div className="absolute w-full h-full" onClick={handleModalClose}>
+          <div className="absolute bg-green top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] p-2 rounded-md border-solid border-2 border-[#000000] min-w-[40%] lg:rounded-xl lg:p-4">
+            <div className="bg-light_green rounded-md lg:rounded-xl p-2 lg:p-4">
+              <div className="flex justify-center text-lg lg:text-3xl mx-auto relative">
+                <div className="mx-auto">Top 100</div>
+              </div>
+              <div className="p-1 max-h-36 lg:max-h-72 overflow-auto scrollbar-hide">
+                {ranking.map((rank: any, i: number) => (
+                  <div
+                    key={i}
+                    className="flex justify-center bg-green text-white text-[10px] rounded-md p-2 my-1 lg:rounded-xl lg:text-lg snap-none"
+                  >
+                    <div className="w-2/12">{i + 1}</div>
+                    <div className="w-8/12">{rank.nickname}</div>
+                    <div className="w-2/12">{rank.score}점</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
