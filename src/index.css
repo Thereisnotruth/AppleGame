@@ -12,6 +12,8 @@ body,
   'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 모바일 웹 브라우저 당겨서 새로고침 막기 */
+  overscroll-behavior: contain;
 }
 
 code {
