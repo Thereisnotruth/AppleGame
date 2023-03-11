@@ -37,8 +37,8 @@ const GamePage = (props: any) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto">
-        <div className="w-4/6 h-1/6 bg-light_green rounded-xl mx-w-6xl">
+      <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto max-w-6xl">
+        <div className="w-4/6 h-1/6 bg-light_green rounded-xl">
           <div
             className="h-full bg-red rounded-xl"
             style={{
