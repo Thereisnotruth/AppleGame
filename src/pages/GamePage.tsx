@@ -2,6 +2,7 @@ import React from 'react';
 import { FaAppleAlt } from 'react-icons/fa';
 import { TbApple } from 'react-icons/tb';
 import { RiFileExcel2Line } from 'react-icons/ri';
+import { BsCodeSlash } from 'react-icons/bs';
 
 import ExcelTop from '../components/ExcelTop';
 import ExcelSide from '../components/ExcelSide';
@@ -10,6 +11,7 @@ const GamePage = (props: any) => {
   const {
     skin,
     handleSkinChange,
+    handleGitMove,
     boundaryRef,
     isDragged,
     handleMouseDown,
@@ -107,15 +109,30 @@ const GamePage = (props: any) => {
         >
           메인으로
         </button>
-        <button
-          type="button"
-          onClick={handleSkinChange}
-          className={
-            'py-2 px-4 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md ml-auto'
-          }
-        >
-          {skin === 'normal' ? <TbApple /> : <RiFileExcel2Line />}
-        </button>
+        <div className={skin === 'normal' ? 'bg-light_green rounded-md ml-auto' : 'ml-auto'}>
+          <button
+            type="button"
+            onClick={handleSkinChange}
+            className={
+              skin === 'normal'
+                ? 'py-2 px-4 bg-light_green text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+                : 'py-2 px-4 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+            }
+          >
+            {skin === 'normal' ? <TbApple /> : <RiFileExcel2Line />}
+          </button>
+          <button
+            type="button"
+            onClick={handleGitMove}
+            className={
+              skin === 'normal'
+                ? 'py-2 px-4 ml-1 bg-light_green text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+                : 'py-2 px-4 ml-1 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+            }
+          >
+            <BsCodeSlash />
+          </button>
+        </div>
       </div>
       <div
         style={
