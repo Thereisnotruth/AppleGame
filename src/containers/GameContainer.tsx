@@ -23,7 +23,7 @@ const GameContainer = () => {
   const [score, setScore] = useState<number>(0);
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
-  const [time, setTime] = useState<number>(2);
+  const [time, setTime] = useState<number>(120);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
 
