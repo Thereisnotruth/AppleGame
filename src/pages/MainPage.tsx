@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FaAppleAlt } from 'react-icons/fa';
 import { TbApple } from 'react-icons/tb';
 import { RiFileExcel2Line } from 'react-icons/ri';
+import ExcelTop from '../components/ExcelTop';
+import ExcelSide from '../components/ExcelSide';
 
 const MainPage = (props: any) => {
   const {
@@ -31,6 +33,8 @@ const MainPage = (props: any) => {
           : {}
       }
     >
+      {skin === 'excel' ? <ExcelTop /> : null}
+      {skin === 'excel' ? <ExcelSide /> : null}
       <div
         className={
           skin === 'normal'

@@ -3,6 +3,9 @@ import { FaAppleAlt } from 'react-icons/fa';
 import { TbApple } from 'react-icons/tb';
 import { RiFileExcel2Line } from 'react-icons/ri';
 
+import ExcelTop from '../components/ExcelTop';
+import ExcelSide from '../components/ExcelSide';
+
 const GamePage = (props: any) => {
   const {
     skin,
@@ -54,6 +57,8 @@ const GamePage = (props: any) => {
           : {}
       }
     >
+      {skin === 'excel' ? <ExcelTop /> : null}
+      {skin === 'excel' ? <ExcelSide /> : null}
       <div className="h-1/6 w-5/6 flex items-center mx-auto justify-around mx-auto max-w-6xl">
         <div
           className={
