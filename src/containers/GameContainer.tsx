@@ -243,6 +243,10 @@ const GameContainer = () => {
     window.location.reload();
   };
 
+  const handleGitMove = () => {
+    window.location.href = 'https://github.com/Thereisnotruth/AppleGame';
+  };
+
   useEffect(() => {
     if (time <= 0) {
       setIsGameOver(true);
@@ -281,6 +285,7 @@ const GameContainer = () => {
     <GamePage
       skin={skin}
       handleSkinChange={handleSkinChange}
+      handleGitMove={handleGitMove}
       boundaryRef={boundaryRef}
       isDragged={isDragged}
       handleMouseDown={handleMouseDown}

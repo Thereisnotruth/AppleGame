@@ -36,10 +36,15 @@ const MainContainer = () => {
     changeSkin();
   };
 
+  const handleGitMove = () => {
+    window.location.href = 'https://github.com/Thereisnotruth/AppleGame';
+  };
+
   return (
     <MainPage
       skin={skin}
       handleSkinChange={handleSkinChange}
+      handleGitMove={handleGitMove}
       startGame={startGame}
       ranking={ranking}
       isModalOpen={isModalOpen}

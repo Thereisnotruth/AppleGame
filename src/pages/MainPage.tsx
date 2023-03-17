@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FaAppleAlt } from 'react-icons/fa';
 import { TbApple } from 'react-icons/tb';
 import { RiFileExcel2Line } from 'react-icons/ri';
+import { BsCodeSlash } from 'react-icons/bs';
+
 import ExcelTop from '../components/ExcelTop';
 import ExcelSide from '../components/ExcelSide';
 
@@ -10,6 +12,7 @@ const MainPage = (props: any) => {
   const {
     skin,
     handleSkinChange,
+    handleGitMove,
     startGame,
     ranking,
     isModalOpen,
@@ -73,13 +76,30 @@ const MainPage = (props: any) => {
         </div>
       </div>
       <div className="h-1/6 flex items-center justify-end mx-auto w-3/4">
-        <button
-          type="button"
-          onClick={handleSkinChange}
-          className={'py-2 px-4 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'}
-        >
-          {skin === 'normal' ? <TbApple /> : <RiFileExcel2Line />}
-        </button>
+        <div className={skin === 'normal' ? 'bg-light_green rounded-md' : ''}>
+          <button
+            type="button"
+            onClick={handleSkinChange}
+            className={
+              skin === 'normal'
+                ? 'py-2 px-4 bg-light_green text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+                : 'py-2 px-4 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+            }
+          >
+            {skin === 'normal' ? <TbApple /> : <RiFileExcel2Line />}
+          </button>
+          <button
+            type="button"
+            onClick={handleGitMove}
+            className={
+              skin === 'normal'
+                ? 'py-2 px-4 ml-1 bg-light_green text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+                : 'py-2 px-4 ml-1 text-3xl hover:shadow-green ease-in-out duration-200 rounded-md'
+            }
+          >
+            <BsCodeSlash />
+          </button>
+        </div>
       </div>
       {isModalOpen ? (
         <div className="absolute w-full h-full" onClick={handleModalClose}>
