@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       boxShadow: {
         green: '0 0 0 2px #5D9C59 inset',
+        grey: '0 0 0 2px #dddddd inset',
       },
     },
     colors: {

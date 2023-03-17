@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import GamePage from '../pages/GamePage';
 import AppleContainer from './AppleContainer';
 import useViewModel from '../viewmodels/RankViewModel';
+import useSkinViewModel from '../viewmodels/SkinViewModel';
+import { skinState } from '../models/SkinAtom';
 
 const GameContainer = () => {
   const boundaryRef = useRef<HTMLDivElement>(null);
@@ -23,12 +26,19 @@ const GameContainer = () => {
   const [score, setScore] = useState<number>(0);
   const [selected, setSelected] = useState<number>(0);
   const [selectedArray, setSelectedArray] = useState<Array<HTMLDivElement>>([]);
-  const [time, setTime] = useState<number>(120);
+  const [time, setTime] = useState<number>(2);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const intervalTime: { current: NodeJS.Timeout | null } = useRef(null);
+  const skin = useRecoilValue(skinState);
+
+  const { changeSkin } = useSkinViewModel();
 
   const navigate = useNavigate();
   const { setRank } = useViewModel();
+
+  const handleSkinChange = () => {
+    changeSkin();
+  };
 
   const handleRegistRank = async () => {
     const newNickname = nickname.replace(' ', '');
@@ -197,6 +207,7 @@ const GameContainer = () => {
           key={i}
         >
           <AppleContainer
+            skin={skin}
             test={Math.floor(Math.random() * 9 + 1)}
             isDragged={isDragged}
             endX={endX}
@@ -268,6 +279,8 @@ const GameContainer = () => {
   }, []);
   return (
     <GamePage
+      skin={skin}
+      handleSkinChange={handleSkinChange}
       boundaryRef={boundaryRef}
       isDragged={isDragged}
       handleMouseDown={handleMouseDown}
